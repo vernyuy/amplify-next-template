@@ -7,11 +7,72 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+  Type: a.enum([
+    'PRIVATE',
+    'PUBLIC'
+  ]),
+  Location: a.customType({
+    lat: a.float(),
+    long: a.float(),
+  }),
+
+  User: a
     .model({
-      content: a.string(),
-    })
-    .authorization((allow) => [allow.publicApiKey()]),
+      userId: a.id(),
+      cognitoId: a.string(),
+      username: a.string(),  
+      phoneNumber: a.phone(),
+      email: a.email(),
+      firstName: a.string(),
+      lastName: a.string()
+    }).authorization(allow => [allow.owner()]),
+
+    Drug: a.model({
+      drugId: a.id(),
+      name: a.string(),
+      description: a.string(),
+      pharmacies: a.hasMany('PharmacyDrug', 'drugId'),
+    }).authorization(allow => [allow.guest()]),
+
+    Pharmacy: a.model({
+      pharmacyId: a.id(),
+      name: a.string(),
+      description: a.string(),
+      location: a.ref('Location'),
+      drugs: a.hasMany('PharmacyDrug', 'pharmacyId'),
+      healthCareProviderId: a.id(),
+      healthCareProvider: a.belongsTo('HealthCareProvider', 'healthCareProviderId')
+    }).authorization(allow => [allow.guest()]),
+
+    PharmacyDrug: a.model({
+      pharmacyId: a.id().required(),
+      drugId: a.id().required(),    
+      pharmacy: a.belongsTo('Pharmacy', 'pharmacyId'),
+      drug: a.belongsTo('Drug', 'drugId'),
+    }).authorization(allow => [allow.guest()]),
+
+    Disease: a.model({
+      diseaseId: a.id(),
+      name: a.string(),
+      description: a.string(),
+      symptoms: a.string().array(),
+      preventionTips: a.string().array()
+    }).authorization(allow => [allow.guest(), allow.owner()]),
+
+    HealthCareProvider: a.model({
+      healthCareProviderId: a.id(),
+      name: a.string(),
+      description: a.string(),
+      location: a.ref('Location'),
+      type: a.ref('Type'),
+      pharmacy: a.hasOne('Pharmacy', 'healthCareProviderId')
+    }).authorization(allow => [allow.guest()]),
+
+    FirstAide: a.model({
+      firstAideId: a.string(),
+      title: a.string(),
+      description: a.string(),
+    }).authorization(allow => [allow.guest(), allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -19,10 +80,7 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
+    defaultAuthorizationMode: 'userPool',
   },
 });
 
