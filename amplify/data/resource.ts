@@ -25,14 +25,14 @@ const schema = a.schema({
       email: a.email(),
       firstName: a.string(),
       lastName: a.string()
-    }).authorization(allow => [allow.owner()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.owner()]),
 
     Drug: a.model({
       drugId: a.id(),
       name: a.string(),
       description: a.string(),
       pharmacies: a.hasMany('PharmacyDrug', 'drugId'),
-    }).authorization(allow => [allow.guest()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.guest()]),
 
     Pharmacy: a.model({
       pharmacyId: a.id(),
@@ -42,14 +42,14 @@ const schema = a.schema({
       drugs: a.hasMany('PharmacyDrug', 'pharmacyId'),
       healthCareProviderId: a.id(),
       healthCareProvider: a.belongsTo('HealthCareProvider', 'healthCareProviderId')
-    }).authorization(allow => [allow.owner()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.owner()]),
 
     PharmacyDrug: a.model({
       pharmacyId: a.id().required(),
       drugId: a.id().required(),    
       pharmacy: a.belongsTo('Pharmacy', 'pharmacyId'),
       drug: a.belongsTo('Drug', 'drugId'),
-    }).authorization(allow => [allow.owner()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.owner()]),
 
     Disease: a.model({
       diseaseId: a.id(),
@@ -57,7 +57,7 @@ const schema = a.schema({
       description: a.string(),
       symptoms: a.string().array(),
       preventionTips: a.string().array()
-    }).authorization(allow => [allow.guest(), allow.owner()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.guest().to(['read']), allow.owner()]),
 
     HealthCareProvider: a.model({
       healthCareProviderId: a.id(),
@@ -66,13 +66,13 @@ const schema = a.schema({
       location: a.ref('Location'),
       type: a.ref('Type'),
       pharmacy: a.hasOne('Pharmacy', 'healthCareProviderId')
-    }).authorization(allow => [allow.owner()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.owner()]),
 
     FirstAide: a.model({
       firstAideId: a.string(),
       title: a.string(),
       description: a.string(),
-    }).authorization(allow => [allow.guest(), allow.owner()]),
+    }).authorization(allow => [allow.authenticated().to(["read"]), allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
