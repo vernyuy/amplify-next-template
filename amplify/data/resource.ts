@@ -42,14 +42,14 @@ const schema = a.schema({
       drugs: a.hasMany('PharmacyDrug', 'pharmacyId'),
       healthCareProviderId: a.id(),
       healthCareProvider: a.belongsTo('HealthCareProvider', 'healthCareProviderId')
-    }).authorization(allow => [allow.guest()]),
+    }).authorization(allow => [allow.owner()]),
 
     PharmacyDrug: a.model({
       pharmacyId: a.id().required(),
       drugId: a.id().required(),    
       pharmacy: a.belongsTo('Pharmacy', 'pharmacyId'),
       drug: a.belongsTo('Drug', 'drugId'),
-    }).authorization(allow => [allow.guest()]),
+    }).authorization(allow => [allow.owner()]),
 
     Disease: a.model({
       diseaseId: a.id(),
@@ -66,7 +66,7 @@ const schema = a.schema({
       location: a.ref('Location'),
       type: a.ref('Type'),
       pharmacy: a.hasOne('Pharmacy', 'healthCareProviderId')
-    }).authorization(allow => [allow.guest()]),
+    }).authorization(allow => [allow.owner()]),
 
     FirstAide: a.model({
       firstAideId: a.string(),

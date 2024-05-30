@@ -4,16 +4,10 @@ import { FormEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { signUp } from "aws-amplify/auth"
 import { useRouter } from 'next/navigation'
-import { Amplify } from "aws-amplify";
-import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { generateClient } from 'aws-amplify/data';
 import { type Schema } from '../../amplify/data/resource'
 
-import { Authenticator } from '@aws-amplify/ui-react'
-import '@aws-amplify/ui-react/styles.css'
-
-Amplify.configure(outputs);
 
 export default function SignUp(){
     const router = useRouter()
