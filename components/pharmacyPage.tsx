@@ -15,7 +15,7 @@ import ImageCard from "./imageCard"
 export default function PharmacyPage(){
     const client = generateClient<Schema>();
     const router = useRouter()
-    const [pharmacies, setPharmacies] = useState([])
+    const [pharmacies, setPharmacies]: any = useState([])
 
     useEffect(()=>{
         getAllPharmacies()
