@@ -10,25 +10,42 @@ interface CardProps {
   cardData: FeatureCardProps;
 }
 
-const FeatureCard = ({cardData}: CardProps) => {
+const Card = ({cardData}: CardProps) => {
   // console.log(cardData)
   const {title, description, image, url} = cardData;
   return (
-    <div className=" min-w-[25%] w-[270px] shadow shadow-lg rounded-b-xl">
-        <div className="w-full bg-blue-200 rounded-t-xl">
+    <div className=" min-w-[30%] w-[70px] shadow shadow-lg rounded-lg border-white rounded-b-xl relative top-0">
+        <div className="flex">
+            <div className="bg-red-300 h-[60px] rounded-tl-lg rounded-br-lg w-[50%] border-4 border-white absolute">
+                <p className="text-black">Hello</p>
+            </div>
+            
+            {/* <div className="h-[50px] w-[2px] bg-white rounded-full absolute right-[50%]"> </div> */}
+        </div>
+        <div className="w-full bg-blue-500 border-4 border-white min-h-[300px] flex rounded-lg">
             <Image
                 src={image}
-                height={500}
-                width={500}
+                height={300}
+                width={300}
                 alt="First Aide"
                 content="cover"
+                className="my-auto"
             />
         </div>
-        <div className="px-3">
+        {/* <div className="px-3">
           <h1 className="font-bold text-lg py-4">{title}</h1>
-          <p className="pb-10 text-gray-500">{description}</p>
-        </div>
+          <p className="pb-10 text-gray-500"></p>
+        </div> */}
         <div className="flex">
+            {/* <div className="h-[50px] w-[4px] bg-white rounded-full absolute left-[49.5%] bottom-0.5"> </div> */}
+            <div className="bg-red-300 h-[60px] rounded-br-lg rounded-tl-lg w-[50%] border-4 border-white absolute bottom-0 right-0">
+                <p className="text-black">Hello</p>
+            </div>
+            
+
+        {/* <div className="bg-red-300 h-[60px] rounded-lg w-[50%] absolute bottom-0 right-0">
+                <p className="text-black">Hello</p>
+            </div> */}
         {/* <div className='mt-20'>
                                 <Link href=''  className='text-white bg-black shadow shadow-lg border rounded-full px-8 py-3'>Get Started</Link>
                             </div> */}
@@ -41,4 +58,4 @@ const FeatureCard = ({cardData}: CardProps) => {
   );
 };
 
-export default FeatureCard;
+export default Card;

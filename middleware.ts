@@ -7,12 +7,16 @@ import { cookies } from 'next/headers';
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
+ try{
   const user = await runWithAmplifyServerContext({
     nextServerContext: { cookies },
     operation: (contextSpec) => getCurrentUser(contextSpec)
   });
 
   console.log("User", user)
+ }catch(err){
+  console.log(err)
+ }
 
   const authenticated = await runWithAmplifyServerContext({
     nextServerContext: { request, response },

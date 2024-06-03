@@ -54,7 +54,7 @@ export default function CreateDrug(){
                 <div className='bg-bl mx-auto my-auto flex w-full h-full'>
                     <div className='w-[80%] md:w-[60%] sm:w-[70%] mx-auto my-auto'>
                         <div>
-                            <h2 className='text-2xl my-4'>Enter code</h2>
+                            <h2 className='text-2xl my-4'>Create Pharmacy</h2>
                         </div>
                         <div className={isError?"flex text-red-500 pb-4" : "hidden"}><h4>{errorMessage}</h4></div>
                     <form onSubmit={onSubmit}>

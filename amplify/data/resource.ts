@@ -1,4 +1,18 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { 
+  type ClientSchema,
+   a, 
+   defineData, 
+  defineFunction, 
+} from "@aws-amplify/backend";
+
+export const MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0";
+
+export const generateHaikuFunction = defineFunction({
+  entry: "./generateHaiku.ts",
+  environment: {
+    MODEL_ID,
+  },
+});
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -7,6 +21,13 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
+  generateHaiku: a
+  .query()
+  .arguments({ prompt: a.string().required() })
+  .returns(a.string())
+  .authorization((allow) => [allow.authenticated()])
+  .handler(a.handler.function(generateHaikuFunction)),
+
   Type: a.enum([
     'PRIVATE',
     'PUBLIC'
