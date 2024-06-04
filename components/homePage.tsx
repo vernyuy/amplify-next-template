@@ -1,6 +1,5 @@
 "use client"
 
-import { signOut } from "aws-amplify/auth"
 import { useRouter } from 'next/navigation'
 import NavBar from '@/components/navbar'
 import Link from 'next/link'
@@ -44,10 +43,7 @@ export default function HomePage(){
             console.log(err)
         }
     }
-    const handleSignOut = async () => {
-        await signOut()
-        router.replace('/signin')
-      }
+
     return(
         <div className='bg-blue-100/40 pt-4'>
             <div className='h-full w-full'>
@@ -63,9 +59,6 @@ export default function HomePage(){
                             <div >
                                 <h2 className='text-5xl font-bold my-6'>Your Health is Our Greatest Priority</h2>
                                 <p className='leading-6'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur, ut saepe, et porro nobis, cupiditate culpa labore minus repellat quod quos deserunt aperiam mollitia eos facilis rerum recusandae veritatis ipsam!</p>
-                            </div>
-                            <div>
-                                <button onClick={()=>handleSignOut()}>Sign Out</button>
                             </div>
 
                             <div className='mt-20'>
@@ -87,11 +80,12 @@ export default function HomePage(){
                             </div>
                         </div>
                         <div className=' px-24 pt-10 flex flex-wrap justify-evenly gap-3'>
-                                {/* <FeatureCard cardData={{title:"Pharmacies", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
+                                <FeatureCard cardData={{title:"Pharmacies", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
 
-                                <FeatureCard cardData={{title:"Basic First Aide", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/first-aide.png"}}/> */}
+                                <FeatureCard cardData={{title:"Basic First Aide", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/first-aide.png"}}/>
+                                <FeatureCard cardData={{title:"Basic First Aide", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/first-aide.png"}}/>
 
-                                <Card cardData={{title:"Health Care Providers", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
+                                {/* <Card cardData={{title:"Health Care Providers", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/> */}
                                 {/* <FeatureCard/>
                                 <FeatureCard/> */}
                             </div>

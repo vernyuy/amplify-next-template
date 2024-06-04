@@ -5,7 +5,7 @@ import {
   defineFunction, 
 } from "@aws-amplify/backend";
 
-export const MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0";
+export const MODEL_ID = "amazon.titan-text-premier-v1:0"//"anthropic.claude-3-haiku-20240307-v1:0";
 
 export const generateHaikuFunction = defineFunction({
   entry: "./generateHaiku.ts",
@@ -25,7 +25,7 @@ const schema = a.schema({
   .query()
   .arguments({ prompt: a.string().required() })
   .returns(a.string())
-  .authorization((allow) => [allow.authenticated()])
+  .authorization((allow) => [allow.guest(), allow.authenticated()])
   .handler(a.handler.function(generateHaikuFunction)),
 
   Type: a.enum([

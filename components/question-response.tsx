@@ -23,6 +23,8 @@ export default function QuestionResponse() {
       prompt,
     });
 
+    console.log(data)
+
     if (!errors) {
       setAnswer(data);
       setPrompt("");

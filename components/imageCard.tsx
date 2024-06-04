@@ -17,7 +17,7 @@ const ImageCard = ({cardData}: CardProps) => {
         <div className="w-full h-[25%]">
 
         </div>
-        <div className="w-full h-[75%] rounded-3xl bg-blue-300">
+        <div className="w-full h-[75%] rounded-3xl bg-blue-600">
             <Image
                 src={'/doc.png'}
                 fill
