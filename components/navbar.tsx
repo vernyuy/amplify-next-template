@@ -29,12 +29,12 @@ const Navbar = () => {
       
       <header>
         <nav className="flex justify-between gap-2 sm:gap-0 md:gap-2  text-black">
-          <div className="flex items-center">
+          <div className="flex items-center bg-red">
             <Image
-              src="https://car-showcase-tawny-one.vercel.app/logo.svg"
+              src="amplify.svg"
               alt="logo"
-              width={100}
-              height={100}
+              width={30}
+              height={10}
               className=""
             />
           </div>

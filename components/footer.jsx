@@ -12,11 +12,11 @@ const Footer = () => {
            justify-between gap-5 px-6 py-10 sm:px-16"
       >
         <div className="flex flex-col justify-start items-start gap-6">
-          <Image
-            src="https://car-showcase-tawny-one.vercel.app/logo.svg"
-            alt="logo"
-            width={118}
-            height={18}
+        <Image
+              src="amplify.svg"
+              alt="logo"
+              width={30}
+              height={10}
             className="object-contain"
           />
           <p className="text-base text-gray-700">
