@@ -13,7 +13,7 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   useEffect(()=>{
     getCurrentAuthenticatedUser()
-    console.log(user)
+    // console.log(user)
   },[user])
 
   const getCurrentAuthenticatedUser = async () => {
@@ -29,7 +29,7 @@ const Navbar = () => {
       
       <header>
         <nav className="flex justify-between gap-2 sm:gap-0 md:gap-2  text-black">
-          <div className="flex items-center bg-red">
+          <div className="flex items-center">
             <Image
               src="amplify.svg"
               alt="logo"

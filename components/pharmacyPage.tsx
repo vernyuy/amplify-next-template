@@ -19,12 +19,14 @@ export default function PharmacyPage(){
 
     useEffect(()=>{
         getAllPharmacies()
+
+        console.log(pharmacies)
     }, [pharmacies])
     const getAllPharmacies = async () =>{
+        console.log("getting all pharmacies")
         try{
             const res = await client.models.Pharmacy.list();
             setPharmacies(res.data)
-            console.log(pharmacies)
         }catch(err){
             console.log(err)
         }
@@ -82,9 +84,9 @@ export default function PharmacyPage(){
                         </div>
                         <div className=' px-1 sm:px-24 pt-10 flex flex-wrap justify-evenly gap-3'>
                             {
-                                pharmacies.map((pharm: any)=>{
-                                    <FeatureCard key={pharm.id} cardData={{title:"Deligent Clinic", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
-                                })
+                                pharmacies.map((pharm: any)=>
+                                    <FeatureCard key={pharm.id} cardData={{title: pharm.name, description: pharm.description, url:"", image:"/pharm.png"}}/>
+                                )
                             }
                                 {/* <FeatureCard cardData={{title:"Deligent Clinic", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
 
