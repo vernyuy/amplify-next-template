@@ -53,7 +53,7 @@ const schema = a.schema({
       name: a.string(),
       description: a.string(),
       pharmacies: a.hasMany('PharmacyDrug', 'drugId'),
-    }).authorization(allow => [allow.owner(), allow.guest().to(["read"])]),
+    }).authorization(allow => [allow.owner(), allow.authenticated().to(['read']), allow.guest().to(["read"])]),
 
     Pharmacy: a.model({
       pharmacyId: a.id(),
