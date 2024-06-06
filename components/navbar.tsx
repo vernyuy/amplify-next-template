@@ -48,7 +48,7 @@ const Navbar = () => {
               <li><Link href={'/pharmacy'}>Pharmacies</Link></li>
               <li><Link href={'/shop'}>Shop</Link></li>
               <li><Link href={'/features'}>Features</Link></li>
-              <li><Link href={'/question-answer'}>First Aide</Link></li>
+              <li><Link href={'/question-response'}>First Aide</Link></li>
               <li className="sm:hidden flex flex-row flex-wrap items-center justify-center gap-2 w-full pb-5">
                 <Link href='/signin' className="border border-blue-500 text-blue-500 px-4 text-[12px] py-1 rounded-full whitespace-nowrap w-[35%]">
                   Sign In

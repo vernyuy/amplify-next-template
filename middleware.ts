@@ -5,6 +5,7 @@ import { getCurrentUser } from 'aws-amplify/auth/server';
 import { cookies } from 'next/headers';
 
 export async function middleware(request: NextRequest) {
+  console.log(request.url)
   const response = NextResponse.next();
 
  try{
@@ -33,10 +34,21 @@ export async function middleware(request: NextRequest) {
       }
     }
   });
+  if(request.url === "http://localhost:3000/signin"){
+    if (authenticated) {
+      console.log("Hello")
+      return NextResponse.redirect(new URL('/', request.url))
+    }else{
+      console.log("redirect")
+      return response;
+    }
+  }
 console.log(authenticated)
   if (authenticated) {
     return response;
   }
+
+
 
   return NextResponse.redirect(new URL('/signin', request.url));
 }
