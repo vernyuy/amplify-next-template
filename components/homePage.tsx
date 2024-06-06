@@ -47,7 +47,7 @@ export default function HomePage(){
     return(
         <div className='bg-blue-100/40 pt-4'>
             <div className='h-full w-full'>
-                <div className='h-full w-full bg-blur sticky top-5'>
+                <div className='h-full w-full bg-blur sticky top-5 z-50'>
                     <div className='mx-auto bg-white/40 w-[85%] border shadow shadow-lg rounded-full'>
                         <NavBar/>
                     </div>

@@ -11,19 +11,23 @@ import { generateClient } from 'aws-amplify/data';
 import { type Schema } from '@/amplify/data/resource';
 import CardTwo from "./cardTwo"
 import ImageCard from "./imageCard"
+import Script from 'next/script'
 
 export default function PharmacyPage(){
     const client = generateClient<Schema>();
     const router = useRouter()
+    const [lat, setLat] = useState(0)
+    const [lng, setLng] = useState(0)
     const [pharmacies, setPharmacies]: any = useState([])
+    const [nearPharms, setNearPharms]: any = useState([])
 
     useEffect(()=>{
         getAllPharmacies()
 
-        console.log(pharmacies)
+        // console.log(pharmacies)
     }, [pharmacies])
     const getAllPharmacies = async () =>{
-        console.log("getting all pharmacies")
+        // console.log("getting all pharmacies")
         try{
             const res = await client.models.Pharmacy.list();
             setPharmacies(res.data)
@@ -31,12 +35,53 @@ export default function PharmacyPage(){
             console.log(err)
         }
     }
+
+    // const getNearByPharmacies = async () =>{
+    //     // console.log("getting all pharmacies")
+    //     try{
+    //         const res = await client.models.Pharmacy.list({
+    //             filter:{
+    //                 and: [
+    //                     {
+    //                         priority: { eq: '1' }
+    //                     }
+    //                 ]
+    //             }
+    //         });
+    //         setPharmacies(res.data)
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // }
     const handleSignOut = async () => {
         await signOut()
         router.replace('/signin')
       }
     return(
+        <>
+            <Script id="show-banner">
+               {`
+                    let lat;
+                    let lng;
+                    if(navigator.geolocation){
+                        navigator.geolocation.getCurrentPosition((position)=>{
+                            lat = position.coords.latitude;
+                            lng = position.coords.longitude;
+                            let inputF = document.getElementById("id1");
+                            inputF.value = lat;
+
+                            let inputF2 = document.getElementById("id2");
+                            inputF2.value = lng;
+                        })
+                    }
+
+
+                    
+               `}
+            </Script>
         <div className='bg-blue-100/40 pt-4'>
+            <input type="number" id="id1" name="lat"/>
+            <input type="number" id="id2" name="lng"/>
             <div className='h-full w-full'>
                 <div className='h-full w-full bg-blur sticky top-5 z-50'>
                     <div className='mx-auto bg-white/40 w-[85%] border shadow shadow-lg rounded-full'>
@@ -82,10 +127,13 @@ export default function PharmacyPage(){
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <button>get near by</button>
+                        </div>
                         <div className=' px-1 sm:px-24 pt-10 flex flex-wrap justify-evenly gap-3'>
                             {
                                 pharmacies.map((pharm: any)=>
-                                    <FeatureCard key={pharm.id} cardData={{title: pharm.name, description: pharm.description, url:"", image:"/pharm.png"}}/>
+                                   pharm.location?.lat - 4 > 2? <FeatureCard key={pharm.id} cardData={{title: pharm.name, description: pharm.description, url:"", image:"/pharm.png"}}/>:<div></div>
                                 )
                             }
                                 {/* <FeatureCard cardData={{title:"Deligent Clinic", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
@@ -112,5 +160,6 @@ export default function PharmacyPage(){
             </div>
             
         </div>
+        </>
     )
 }

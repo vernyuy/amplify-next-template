@@ -262,7 +262,7 @@ export default function CreateDrug() {
               {isLoading ? (
                 <button
                   disabled
-                  className="w-full flex justify-center gap-2 mt-4 bg-green-300 text-white h-9 rounded-lg"
+                  className="w-full flex justify-center gap-2 mt-4 bg-blue-300 text-white h-9 rounded-lg"
                 >
                   <p className="my-auto">Loading...</p>
                   <svg
@@ -340,7 +340,7 @@ export default function CreateDrug() {
               ) : (
                 <button
                   type="submit"
-                  className="w-full flex justify-center gap-2 mt-4 bg-green-500 text-white h-9 rounded-lg"
+                  className="w-full flex justify-center gap-2 mt-4 bg-blue-500 text-white h-9 rounded-lg"
                 >
                   <p className="my-auto">Register</p>
                 </button>

@@ -42,5 +42,5 @@ console.log(authenticated)
 }
 
 export const config = {
-  matcher: ["/"],
+  matcher: ["/", "/home", "/pharmacy"],
 };

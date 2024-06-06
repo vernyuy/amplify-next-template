@@ -23,7 +23,11 @@ export default function CreateDrug(){
         try{
             const result = await client.models.Pharmacy.create({
                 name: name,
-                description: description
+                description: description,
+                location: {
+                    lat: 4.1559658,
+                    long: 9.2632243,
+                },
               })
               console.log(result)
         }catch(err: any){
@@ -38,7 +42,7 @@ export default function CreateDrug(){
     return(
         <div className='w-screen h-screen'>
             <div className='flex justify-between  w-full h-full'>
-                <div className='hidden sm:flex sm:text-xl sm:bg-green-400/10 sm:mx-auto sm:my-auto sm:w-full sm:h-full'>
+                <div className='hidden sm:flex sm:text-xl sm:bg-blue-400/10 sm:mx-auto sm:my-auto sm:w-full sm:h-full'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 14 14">
                         <path fill="currentColor" fill-rule="evenodd" d="M1.923.25h5.308a3.288 3.288 0 0 1 0 6.577h-.642l2.374 2.226l2.584-2.583a.75.75 0 1 1 1.06 1.06l-2.549 2.55l2.532 2.373a.75.75 0 0 1-1.026 1.094L8.997 11.14l-2.39 2.39a.75.75 0 0 1-1.06-1.06l2.355-2.356l-3.506-3.287H2.673v5.25a.75.75 0 0 1-1.5 0V1a.75.75 0 0 1 .75-.75m5.308 5.077H2.673V1.75h4.558a1.788 1.788 0 1 1 0 3.577" clip-rule="evenodd"/>
                     </svg>
@@ -68,7 +72,7 @@ export default function CreateDrug(){
                         </div>
                         {
                             isLoading
-                            ?<button disabled className='w-full flex justify-center gap-2 mt-4 bg-green-300 text-white h-9 rounded-lg' >
+                            ?<button disabled className='w-full flex justify-center gap-2 mt-4 bg-blue-300 text-white h-9 rounded-lg' >
                             <p className='my-auto'>Loading...</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='my-auto'>
                                 <circle cx="12" cy="12" r="0" fill="currentColor">
@@ -85,7 +89,7 @@ export default function CreateDrug(){
                                 </circle>
                             </svg>
                         </button>
-                        :<button type="submit" className='w-full flex justify-center gap-2 mt-4 bg-green-500 text-white h-9 rounded-lg' >
+                        :<button type="submit" className='w-full flex justify-center gap-2 mt-4 bg-blue-500 text-white h-9 rounded-lg' >
                         <p className='my-auto'>Register</p>
                     </button>
                         }

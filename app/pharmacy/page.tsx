@@ -4,6 +4,9 @@ import PharmacyPage from '@/components/pharmacyPage'
 
 export default function Pharmacy(){
 
+
+
+
     return(
         <div>
                 <script

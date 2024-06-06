@@ -14,7 +14,7 @@ export const backend = defineBackend({
 backend.generateHaikuFunction.resources.lambda.addToRolePolicy(
   new PolicyStatement({
     effect: Effect.ALLOW,
-    actions: ["bedrock:InvokeModel"],
+    actions: ["bedrock:*"],
     resources: [
       `arn:aws:bedrock:*::foundation-model/${MODEL_ID}`,
     ],
