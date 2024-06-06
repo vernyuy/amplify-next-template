@@ -25,7 +25,7 @@ const schema = a.schema({
   .query()
   .arguments({ prompt: a.string().required() })
   .returns(a.string())
-  .authorization((allow) => [allow.guest(), allow.authenticated()])
+  .authorization((allow) => [allow.guest(), allow.authenticated(), allow.publicApiKey()])
   .handler(a.handler.function(generateHaikuFunction)),
 
   Type: a.enum([
