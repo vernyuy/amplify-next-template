@@ -3,7 +3,7 @@ import { auth } from "./auth/resource.js";
 import { data, MODEL_ID, generateHaikuFunction } from "./data/resource";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { sayHello } from "./functions/bedrock-lambda-fn/resource";
-import { storage } from "./storage/resources";
+import { storage } from "./storage/resource.js"
 
 export const backend = defineBackend({
   auth,
