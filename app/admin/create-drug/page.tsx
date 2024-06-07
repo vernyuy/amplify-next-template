@@ -20,12 +20,12 @@ export default function CreateDrug() {
     setFile(event.target.files[0]);
   };
 
-  const saveImage = async () => {
+  const saveImage = () => {
     console.log(file)
     const test = uploadData({
       path: `pictures/${file.name}`,
       data: file,
-  })
+  }).result
   console.log(test)
     // const fileKey = `drugs/${file.name}`;
     // await uploadData(file, fileKey);
@@ -56,9 +56,7 @@ export default function CreateDrug() {
 
   return (
     <div className="w-screen h-screen">
-      <button onClick={()=>saveImage()}>
-        sub
-      </button>
+      
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
@@ -223,6 +221,11 @@ export default function CreateDrug() {
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
               </a>
+            </li>
+            <li>
+            <button onClick={()=> saveImage()}>
+        sub
+      </button>
             </li>
           </ul>
         </div>

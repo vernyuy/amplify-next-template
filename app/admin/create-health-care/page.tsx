@@ -19,14 +19,16 @@ export default function CreateDrug() {
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name")?.toString()!;
     const description = formData.get("description")?.toString()!;
+    const lat = parseInt(formData.get("lat")?.toString()!)
+    const lng = parseInt(formData.get("lng")?.toString()!)
 
     try {
       const result = await client.models.Pharmacy.create({
         name: name,
         description: description,
         location: {
-          lat: 4.1559658,
-          long: 9.2632243,
+          lat: lat,
+          long: lng,
         },
       });
       console.log(result);
@@ -274,6 +276,25 @@ export default function CreateDrug() {
                   name="image"
                   className="h-9 border rounded-lg px-4 w-full"
                 />
+              </div>
+              <div className="flex flex-col w-full mb-2">
+                <label>Location</label>
+                <div className="flex w-full">
+                  <input
+                    type="number"
+                    disabled={isLoading}
+                    name="lat"
+                    placeholder="enter latitude"
+                    className="h-9 border rounded-lg px-4 w-full"
+                  />
+                  <input
+                    type="number"
+                    disabled={isLoading}
+                    name="lng"
+                    placeholder="enter longitude"
+                    className="h-9 border rounded-lg px-4 w-full"
+                  />
+                </div>
               </div>
               {isLoading ? (
                 <button

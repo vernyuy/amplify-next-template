@@ -14,8 +14,8 @@ const FeatureCard = ({ cardData }: CardProps) => {
   // console.log(cardData)
   const { title, description, image, url } = cardData;
   return (
-    <div className=" min-w-[25%] w-[270px] shadow shadow-lg rounded-b-xl">
-      <div className="w-full bg-blue-200 rounded-t-xl">
+    <div className=" min-w-[25%] w-[270px] shadow shadow-lg rounded-b-xl ">
+      <div className="w-full bg-blue-200 rounded-t-xl overflow-hidden">
         <Image
           src={image}
           height={500}

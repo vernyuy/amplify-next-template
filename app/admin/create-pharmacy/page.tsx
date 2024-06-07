@@ -18,6 +18,8 @@ export default function CreateDrug() {
     setIsLoading(true);
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name")?.toString()!;
+    const lat = parseInt(formData.get("lat")?.toString()!)
+    const lng = parseInt(formData.get("lng")?.toString()!)
     const description = formData.get("description")?.toString()!;
 
     try {
@@ -120,7 +122,7 @@ export default function CreateDrug() {
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
-                  <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
+                  <path fill="currentColor" fill-rule="evenodd" d="M1.923.25h5.308a3.288 3.288 0 0 1 0 6.577h-.642l2.374 2.226l2.584-2.583a.75.75 0 1 1 1.06 1.06l-2.549 2.55l2.532 2.373a.75.75 0 0 1-1.026 1.094L8.997 11.14l-2.39 2.39a.75.75 0 0 1-1.06-1.06l2.355-2.356l-3.506-3.287H2.673v5.25a.75.75 0 0 1-1.5 0V1a.75.75 0 0 1 .75-.75m5.308 5.077H2.673V1.75h4.558a1.788 1.788 0 1 1 0 3.577" clip-rule="evenodd"/>
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap">Drugs</span>
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
@@ -274,6 +276,26 @@ export default function CreateDrug() {
                   name="image"
                   className="h-9 border rounded-lg px-4 w-full"
                 />
+              </div>
+
+              <div className="flex flex-col w-full mb-2">
+                <label>Location</label>
+                <div className="flex w-full gap-3">
+                  <input
+                    type="number"
+                    disabled={isLoading}
+                    name="lat"
+                    placeholder="enter latitude"
+                    className="h-9 border rounded-lg px-4 w-full"
+                  />
+                  <input
+                    type="number"
+                    disabled={isLoading}
+                    name="lng"
+                    placeholder="enter longitude"
+                    className="h-9 border rounded-lg px-4 w-full"
+                  />
+                </div>
               </div>
               {isLoading ? (
                 <button
