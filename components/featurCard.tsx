@@ -20,7 +20,7 @@ const FeatureCard = ({ cardData }: CardProps) => {
           src={image}
           height={500}
           width={500}
-          alt="First Aide"
+          alt=""
           content="cover"
         />
       </div>

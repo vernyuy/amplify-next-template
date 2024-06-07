@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
+import { uploadData, getUrl } from 'aws-amplify/storage';
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -11,11 +12,34 @@ export default function CreateDrug() {
   const [isError, setIsError] = useState(false);
   const [isOpen, setisOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState("");
-  const client = generateClient<Schema>();
+  const client = generateClient<Schema>(); 
+  const [url, setUrl] = useState('')
+
+  const [file, setFile]: any = useState();
+
+  const handleChange = (event: any) => {
+    setFile(event.target.files[0]);
+  };
+
+  const saveImage = async () => {
+    console.log(file)
+    await uploadData({
+      path: `pictures/${file.name}`,
+      data: file,
+  }).result
+
+  const dUrl = await getUrl({
+    path: `pictures/${file.name}`
+  })
+  console.log(dUrl.url.href)
+  setUrl(dUrl.url.href)
+  }
+
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
+    saveImage()
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name")?.toString()!;
     const description = formData.get("description")?.toString()!;
@@ -30,6 +54,7 @@ export default function CreateDrug() {
           lat: lat,
           long: lng,
         },
+        imageUrl: url
       });
       console.log(result);
     } catch (err: any) {

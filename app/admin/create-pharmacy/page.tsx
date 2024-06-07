@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
+import { uploadData, getUrl } from 'aws-amplify/storage';
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -12,26 +13,60 @@ export default function CreateDrug() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setisOpen] = useState(false)
   const client = generateClient<Schema>();
+  const [file, setFile]: any = useState();
+  const [url, setUrl] = useState('')
+
+  const handleChange = (event: any) => {
+    setFile(event.target.files[0]);
+  };
+
+  const saveImage = async () => {
+    console.log(file)
+    await uploadData({
+      path: `pictures/${file.name}`,
+      data: file,
+  }).result
+
+  const dUrl = await getUrl({
+    path: `pictures/${file.name}`
+  })
+  console.log(dUrl.url.href)
+  setUrl(dUrl.url.href)
+  }
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
+
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name")?.toString()!;
     const lat = parseInt(formData.get("lat")?.toString()!)
     const lng = parseInt(formData.get("lng")?.toString()!)
     const description = formData.get("description")?.toString()!;
+    const res = await uploadData({
+        path: `pictures/${file.name}`,
+        data: file,
+    }).result
+
+    const dUrl = await getUrl({
+      path: `pictures/${file.name}`
+    });
+    setUrl(dUrl.url.href)
+
+    console.log(url)
 
     try {
       const result = await client.models.Pharmacy.create({
         name: name,
         description: description,
         location: {
-          lat: 4.1559658,
-          long: 9.2632243,
+          lat: lat,
+          long: lng,
         },
+        imageUrl: dUrl.url.href
       });
       console.log(result);
+      setIsLoading(false);
     } catch (err: any) {
       console.log(err);
       setIsError(true);
@@ -273,6 +308,7 @@ export default function CreateDrug() {
                 <input
                   type="file"
                   disabled={isLoading}
+                  onChange={handleChange}
                   name="image"
                   className="h-9 border rounded-lg px-4 w-full"
                 />

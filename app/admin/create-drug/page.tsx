@@ -13,8 +13,8 @@ export default function CreateDrug() {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setisOpen] = useState(false)
-  const [url, setUrl] = useState('')
   const client = generateClient<Schema>();
+  const [url, setUrl] = useState('')
 
   const [file, setFile]: any = useState();
 
@@ -34,9 +34,6 @@ export default function CreateDrug() {
   })
   console.log(dUrl.url.href)
   setUrl(dUrl.url.href)
-    // const fileKey = `drugs/${file.name}`;
-    // await uploadData(file, fileKey);
-    // return fileKey;
   }
 
 

@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 const Footer = () => {
   return (
-    <footer className="flex flex-col text-black-100 mt-5 border-t border-gray-100">
+    <footer className="flex flex-col text-black-100 mt-5 border-t bg-blue-100 border-gray-100">
       <div
         className="flex max-md:flex-col flex-wrap
            justify-between gap-5 px-6 py-10 sm:px-16"
@@ -22,24 +22,6 @@ const Footer = () => {
           <p className="text-base text-gray-700">
             HIS 2024 <br /> All rights reserved &copy;
           </p>
-        </div>
-
-        <div className="footer__links">
-          {/* {footerLinks.map((link) => (
-            <div key={link.title} className="footer__link">
-              <h3 className="font-bold">{link.title}</h3>
-
-              {link.links.map((link) => (
-                <Link
-                  key={link.title}
-                  href={link.url}
-                  className="text-gray-500"
-                >
-                  {link.title}
-                </Link>
-              ))}
-            </div>
-          ))} */}
         </div>
       </div>
 
