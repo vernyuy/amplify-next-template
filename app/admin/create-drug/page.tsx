@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
+import { uploadData } from 'aws-amplify/storage';
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -12,6 +13,25 @@ export default function CreateDrug() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setisOpen] = useState(false)
   const client = generateClient<Schema>();
+
+  const [file, setFile]: any = useState();
+
+  const handleChange = (event: any) => {
+    setFile(event.target.files[0]);
+  };
+
+  const saveImage = async () => {
+    console.log(file)
+    const test = uploadData({
+      path: `pictures/${file.name}`,
+      data: file,
+  })
+  console.log(test)
+    // const fileKey = `drugs/${file.name}`;
+    // await uploadData(file, fileKey);
+    // return fileKey;
+  }
+
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,6 +56,9 @@ export default function CreateDrug() {
 
   return (
     <div className="w-screen h-screen">
+      <button onClick={()=>saveImage()}>
+        sub
+      </button>
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
@@ -266,6 +289,7 @@ export default function CreateDrug() {
                   type="file"
                   disabled={isLoading}
                   name="image"
+                  onChange={handleChange}
                   className="h-9 border rounded-lg px-4 w-full"
                 />
               </div>

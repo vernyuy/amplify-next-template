@@ -18,41 +18,50 @@ export default function PharmacyPage() {
   const router = useRouter();
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
-  const [pharmacies, setPharmacies]: any = useState([]);
+  const [pharmacies, setPharmacies] = useState<Array<Schema["Pharmacy"]["type"]>>([]);
   const [nearPharms, setNearPharms]: any = useState([]);
 
   useEffect(() => {
     getAllPharmacies();
-
-    // console.log(pharmacies)
-  }, [pharmacies]);
+    console.log(pharmacies)
+          pharmacies.map((p: any)=>{
+            if(p.location?.lat - 4 > 2 ){
+              console.log(p.location.lat)
+              // setNearPharms([...nearPharms, p])
+            }else{
+              console.log("not near", p.location.lat)
+            }
+          })
+  }, []);
   const getAllPharmacies = async () => {
     // console.log("getting all pharmacies")
     try {
-      const res = await client.models.Pharmacy.list();
-      setPharmacies(res.data);
+      client.models.Pharmacy.observeQuery().subscribe({
+        next: (data) => setPharmacies([...data.items]),
+      });
+      
     } catch (err) {
       console.log(err);
     }
   };
 
-  // const getNearByPharmacies = async () =>{
-  //     // console.log("getting all pharmacies")
-  //     try{
-  //         const res = await client.models.Pharmacy.list({
-  //             filter:{
-  //                 and: [
-  //                     {
-  //                         priority: { eq: '1' }
-  //                     }
-  //                 ]
-  //             }
-  //         });
-  //         setPharmacies(res.data)
-  //     }catch(err){
-  //         console.log(err)
-  //     }
-  // }
+  const getNearByPharmacies = async () =>{
+      // console.log("getting all pharmacies")
+      try{
+          const res = await client.models.Pharmacy.list({
+              filter:{
+                  and: [
+                      {
+                          location: { eq: '1' }
+                      }
+                  ]
+              }
+          });
+          setPharmacies(res.data)
+      }catch(err){
+          console.log(err)
+      }
+  }
   const handleSignOut = async () => {
     await signOut();
     router.replace("/signin");
@@ -153,24 +162,24 @@ export default function PharmacyPage() {
                   </div>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <button>get near by</button>
-              </div>
+              </div> */}
               <div className=" px-1 sm:px-24 pt-10 flex flex-wrap justify-evenly gap-3">
                 {pharmacies.map((pharm: any) =>
-                  pharm.location?.lat - 4 > 2 ? (
+                  // pharm.location?.lat - 4 > 2 ? (
                     <FeatureCard
                       key={pharm.id}
                       cardData={{
                         title: pharm.name,
                         description: pharm.description,
                         url: "",
-                        image: "/pharm.png",
+                        image: "/p1.jpeg",
                       }}
                     />
-                  ) : (
-                    <div></div>
-                  )
+                  // ) : (
+                  //   <div></div>
+                  // )
                 )}
                 {/* <FeatureCard cardData={{title:"Deligent Clinic", description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta harum tempore qui mollitia doloremque repudiandae asperiores eligendi tempora eum,", url:"", image:"/pharm.png"}}/>
 
