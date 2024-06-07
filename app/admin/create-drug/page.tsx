@@ -6,6 +6,7 @@ import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
 import { uploadData, getUrl } from 'aws-amplify/storage';
 import Image from "next/image";
+import {v4 as uuidv4} from 'uuid'
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -50,6 +51,7 @@ export default function CreateDrug() {
         name: name,
         description: description,
         imageUrl: url,
+        drugId: uuidv4()
       });
       setIsLoading(false);
     } catch (err: any) {

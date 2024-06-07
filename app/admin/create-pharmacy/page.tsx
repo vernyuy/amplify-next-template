@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
 import { uploadData, getUrl } from 'aws-amplify/storage';
+import {v4 as uuidv4} from "uuid"
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -43,18 +44,22 @@ export default function CreateDrug() {
     const lat = parseInt(formData.get("lat")?.toString()!)
     const lng = parseInt(formData.get("lng")?.toString()!)
     const description = formData.get("description")?.toString()!;
-    const res = await uploadData({
+    try{
+      await uploadData({
         path: `pictures/${file.name}`,
         data: file,
-    }).result
+      }).result
+    }catch(err:any){
+      console.log(err)
+      setIsError(true);
+      setIsLoading(false);
+      setErrorMessage(err.message);
+    }
 
     const dUrl = await getUrl({
       path: `pictures/${file.name}`
     });
     setUrl(dUrl.url.href)
-
-    console.log(url)
-
     try {
       const result = await client.models.Pharmacy.create({
         name: name,
@@ -63,7 +68,9 @@ export default function CreateDrug() {
           lat: lat,
           long: lng,
         },
-        imageUrl: dUrl.url.href
+        imageUrl: dUrl.url.href,
+        pharmacyId: uuidv4(),
+        healthCareProviderId: "7ee5ab31-ba0d-482d-8597-dcee62e0f305"
       });
       console.log(result);
       setIsLoading(false);
@@ -105,7 +112,7 @@ export default function CreateDrug() {
         className="fixed top-0 flex left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-[90%] px-3 w-[90%] py-4 my-auto mx-auto shadow shadow-xl overflow-y-auto rounded-xl">
+        <div className=" px-3 py-4 mx-auto shadow shadow-xl overflow-y-auto rounded-r-xl">
           <ul className="space-y-2 font-medium">
             <li>
               <a

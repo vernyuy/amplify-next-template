@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
 import { uploadData, getUrl } from 'aws-amplify/storage';
+import {v4 as uuidv4} from "uuid"
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -39,22 +40,40 @@ export default function CreateDrug() {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    saveImage()
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name")?.toString()!;
     const description = formData.get("description")?.toString()!;
     const lat = parseInt(formData.get("lat")?.toString()!)
     const lng = parseInt(formData.get("lng")?.toString()!)
 
+    try{
+      await uploadData({
+        path: `pictures/${file.name}`,
+        data: file,
+      }).result
+    }catch(err:any){
+      console.log(err)
+      setIsError(true);
+      setIsLoading(false);
+      setErrorMessage(err.message);
+    }
+
+    const dUrl = await getUrl({
+      path: `pictures/${file.name}`
+    });
+    setUrl(dUrl.url.href)
+
     try {
-      const result = await client.models.Pharmacy.create({
+      const result = await client.models.HealthCareProvider.create({
         name: name,
         description: description,
         location: {
           lat: lat,
           long: lng,
         },
-        imageUrl: url
+        imageUrl: dUrl.url.href,
+        healthCareProviderId: uuidv4(),
+        type: "PRIVATE"
       });
       console.log(result);
     } catch (err: any) {
@@ -95,7 +114,7 @@ export default function CreateDrug() {
         className="fixed top-0 flex left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-[90%] px-3 w-[90%] py-4 my-auto mx-auto shadow shadow-xl overflow-y-auto rounded-xl">
+        <div className="px-3 py-4 my-auto mx-auto shadow shadow-xl overflow-y-auto rounded-r-xl">
           <ul className="space-y-2 font-medium">
             <li>
               <a
