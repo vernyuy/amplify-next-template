@@ -20,7 +20,7 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loggedIn, setIsLoggedIn] = useState(false)
+  const [loggedIn, setIsLoggedIn] = useState(false);
 
   const getCurrentAuthenticatedUser = async () => {
     try {
@@ -54,12 +54,12 @@ export default function SignIn() {
     }
   };
 
-  useEffect(()=>{
-    getCurrentAuthenticatedUser()
-    if(loggedIn){
-        router.replace('/')
+  useEffect(() => {
+    getCurrentAuthenticatedUser();
+    if (loggedIn) {
+      router.replace("/");
     }
-  })
+  });
   return (
     <div className="w-screen h-screen">
       <div className="flex justify-between  w-full h-full">

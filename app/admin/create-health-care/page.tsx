@@ -9,8 +9,8 @@ export default function CreateDrug() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setisOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("");
   const client = generateClient<Schema>();
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -130,7 +130,6 @@ export default function CreateDrug() {
             </li>
             <li>
               <a
-              onClick={()=>setisOpen(true)}
                 href="#"
                 className="flex items-center border border-blue-500 p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
               >
@@ -148,6 +147,7 @@ export default function CreateDrug() {
             </li>
             <li>
               <a
+              onClick={()=>setisOpen(true)}
                 href="#"
                 className="flex items-center p-2 border border-blue-500 text-gray-900 rounded-lg  hover:bg-gray-100  group"
               >
@@ -237,12 +237,12 @@ export default function CreateDrug() {
       </div>
 
 
-      <div className="flex justify-between  w-full h-full">
-      <div className={isOpen?"bg-bl mx-auto my-auto flex w-full h-full absolute top-0 left-0 z-50 bg-black/20": "hidden"}>
+      <div className="flex justify-between p-4 sm:ml-64">
+        <div className={isOpen?"bg-bl mx-auto my-auto flex w-full h-full absolute top-0 left-0 z-50 bg-black/20": "hidden"}>
           <div className="w-[80%] md:w-[60%] sm:w-[70%] mx-auto my-auto relative bg-white px-20 py-8 rounded rounded-xl">
             <div onClick={()=>setisOpen(false)} className="hover:cursor-pointer absolute right-20"> close </div>
             <div>
-              <h2 className="text-2xl my-4">Create Pharmacy</h2>
+              <h2 className="text-2xl my-4">Create health care unit</h2>
             </div>
             <div className={isError ? "flex text-red-500 pb-4" : "hidden"}>
               <h4>{errorMessage}</h4>
@@ -365,6 +365,6 @@ export default function CreateDrug() {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 }
