@@ -4,7 +4,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../../amplify/data/resource";
-import { uploadData } from 'aws-amplify/storage';
+import { uploadData, getUrl } from 'aws-amplify/storage';
+import Image from "next/image";
 
 export default function CreateDrug() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function CreateDrug() {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isOpen, setisOpen] = useState(false)
+  const [url, setUrl] = useState('')
   const client = generateClient<Schema>();
 
   const [file, setFile]: any = useState();
@@ -20,13 +22,18 @@ export default function CreateDrug() {
     setFile(event.target.files[0]);
   };
 
-  const saveImage = () => {
+  const saveImage = async () => {
     console.log(file)
-    const test = uploadData({
+    await uploadData({
       path: `pictures/${file.name}`,
       data: file,
   }).result
-  console.log(test)
+
+  const dUrl = await getUrl({
+    path: `pictures/${file.name}`
+  })
+  console.log(dUrl.url.href)
+  setUrl(dUrl.url.href)
     // const fileKey = `drugs/${file.name}`;
     // await uploadData(file, fileKey);
     // return fileKey;
@@ -36,6 +43,7 @@ export default function CreateDrug() {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
+    saveImage()
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name")?.toString()!;
     const description = formData.get("description")?.toString()!;
@@ -44,6 +52,7 @@ export default function CreateDrug() {
       const result = await client.models.Drug.create({
         name: name,
         description: description,
+        imageUrl: url,
       });
       setIsLoading(false);
     } catch (err: any) {
@@ -226,6 +235,13 @@ export default function CreateDrug() {
             <button onClick={()=> saveImage()}>
         sub
       </button>
+
+      <Image
+        src={url}
+        height={50}
+        width={50}
+        alt="hello"
+       />
             </li>
           </ul>
         </div>

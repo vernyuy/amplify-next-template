@@ -52,6 +52,7 @@ const schema = a.schema({
       drugId: a.id(),
       name: a.string(),
       description: a.string(),
+      imageUrl: a.string(),
       pharmacies: a.hasMany("PharmacyDrug", "drugId"),
     })
     .authorization((allow) => [
@@ -65,6 +66,7 @@ const schema = a.schema({
       name: a.string(),
       description: a.string(),
       location: a.ref("Location"),
+      imageUrl: a.string(),
       drugs: a.hasMany("PharmacyDrug", "pharmacyId"),
       healthCareProviderId: a.id(),
       healthCareProvider: a.belongsTo(
@@ -95,6 +97,7 @@ const schema = a.schema({
       name: a.string(),
       description: a.string(),
       symptoms: a.string().array(),
+      imageUrl: a.string(),
       preventionTips: a.string().array(),
     })
     .authorization((allow) => [
@@ -108,6 +111,7 @@ const schema = a.schema({
       healthCareProviderId: a.id(),
       name: a.string(),
       description: a.string(),
+      imageUrl: a.string(),
       location: a.ref("Location"),
       type: a.ref("Type"),
       pharmacy: a.hasOne("Pharmacy", "healthCareProviderId"),
@@ -121,6 +125,7 @@ const schema = a.schema({
     .model({
       firstAideId: a.string(),
       title: a.string(),
+      imageUrl: a.string(),
       description: a.string(),
     })
     .authorization((allow) => [
